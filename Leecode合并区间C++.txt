@@ -1,29 +1,29 @@
 class Solution {
 public:
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
-        if(intervals.size() == 0)
+        if(intervals.size() == 0) // 空的二维数组
         {
             return {};
         }
-
-        sort(intervals.begin(),intervals.end());
-
-        vector<vector<int>> res;
-        vector<int> &pre = intervals[0];
-        for(int i = 0; i < intervals.size();i++)
+        
+        sort(intervals.begin(),intervals.end());//根据二维数组中每一行的第一个元素（每个区间的首元素）排序
+        vector<vector<int>> res; //利用vector容器定义新的二维数组用于接受当前合并完成的区间
+        vector<int> &pre = intervals[0];//pre指向当前处理的区间
+        
+        for(int i = 0;i < intervals.size(); i++)//循环遍历整个二维数组（遍历每一个区间）
         {
-            vector<int> &cur = intervals[i];
-            if(cur[0] > pre[1])
+            vector<int> &cur = intervals[i];//cur指向当前遍历到的区间
+            if(cur[0] > pre[1])//当前遍历区间的首元素与处理的区间的末元素比较，如果大于处理的区间的末元素，说明两个区间没有重叠
             {
-                res.push_back({pre[0],pre[1]});
+                res.push_back({pre[0],pre[1]});//直接将pre所指的区间放入res中
                 pre = cur;
             }
-            else
+            else//否则，有重叠，当前遍历区间的末元素与处理的区间的末元素取最大值
             {
                 pre[1] = max(cur[1],pre[1]);
             }
         }
         res.push_back({pre[0],pre[1]});
-        return res;
+        return res;//返回新的二维数组
     }
 };
