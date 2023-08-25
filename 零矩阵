@@ -1,0 +1,44 @@
+编写一种算法，若M × N矩阵中某个元素为0，则将其所在的行与列清零。
+
+ 
+
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        //M*N的矩阵
+        int rowSize = matrix.size();//记录行数
+        int colSize = matrix[0].size();//记录列数
+        
+        //利用布尔数组记录行或列的哪个位置上有0
+        vector<bool> row(rowSize);
+        vector<bool> col(colSize);//生成一个具有colSize个元素的bool数组
+       
+       //遍历整个矩阵，将矩阵中含0的行，列记录在bool数组中，设置为true
+        for(int i = 0; i < rowSize;i++)
+        {
+            for(int j = 0;j < colSize;j++)
+            {
+                if(matrix[i][j] == 0)
+                {
+                    row[i] = true;
+                    col[j] = true;
+                }
+            }
+        }
+
+        //再次遍历整个矩阵
+        for(int i = 0;i < rowSize;i++)
+        {
+            for(int j = 0;j < colSize;j++)
+            {
+                //把布尔型的两个一维数组看成抽象的二维数组
+                //若其中的一个元素为0，那么原矩阵中所在的行和列将被置为0
+                if(row[i] || col[j] )
+                {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+    }
+};
