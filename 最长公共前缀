@@ -1,0 +1,43 @@
+#include <string>
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+
+        //解1：纵向扫描
+        //记录第一行的字符数组长度
+        int length = strs[0].size();
+        int count = strs.size();//总共有多少个字符数组
+        for(int i = 0;i < length;i++)//开始从第一个字符纵向扫描
+        {
+            char c = strs[0].charAt(i);//利用charAt方法获取当前第一行的第i个位置字符
+            for(int j = 1;j < count;j++)//开始循环纵向比较，从第二行开始与第一行比较
+            {
+                //当遇到最短长度的字符数组 || 当第j行的第i个元素不等于第一行的第i个元素   
+                //满足其中任何一个条件，说明下标为i（当列）之前的元素是最长公共前缀
+                if(i == strs[j].size() || strs[j].charAt(i) != c)
+                {
+                    //从0下标开始截取i个元素
+                    strs[0].substring(0,i);
+                }
+
+            }
+        }
+        return strs[0];
+
+
+        //解法2：
+        // string ret;
+        // ret = strs[0];//创建一个字符数组来保存比较的最长公共前缀
+        // for(int i = 1;i < strs.size();i++)//循环，从第二个字符数组开始比较，结束条件是总共有多少个字符数组
+        // {
+        //     for(int j = 0;j < ret.length();j++)//j指针从下标0开始，依次在两个字符数组中比较
+        //     {
+        //         if(ret[j] != strs[i][j])//若发现两个字符不相等
+        //         {
+        //             ret.erase(j);//在公共前缀数组ret中删除对应的元素
+        //         }
+        //     }
+        // }
+        // return ret;
+    }
+};
