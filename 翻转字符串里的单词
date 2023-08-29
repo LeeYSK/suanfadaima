@@ -1,0 +1,58 @@
+class Solution {
+public:
+    void reverse(string &s,int start,int end)
+    {
+        int left = start;
+        int right = end;
+        while(left < right)
+        {
+            swap(s[left++],s[right--]);
+        }
+    }
+    string reverseWords(string s) {
+       
+
+        //首先把整个s翻转
+        reverse(s,0,s.length() - 1);
+        //去除首空格
+        int start = 0;
+        while(s[start] == ' ') start++;
+
+        //去除尾空格
+        int end = s.size() -1;
+        while(s[end] == ' ') end--;
+
+        string ret;
+        while(start <= end)
+        {
+            if(s[start] != ' ')
+            {
+                //将翻转后的字符复制到ret字符数组
+                ret += s[start];
+                start++;
+            }else
+            {
+                //只复制一个空格到ret
+                ret += s[start];
+                start++;
+                //去除中间空间
+                while(s[start] == s[start - 1])
+                {
+                    start++;
+                }
+            }
+        }
+
+        int k = 0;//翻转ret字符数组里的单词
+        for(int i = 0;i <= ret.length();i++)//应该注意边界条件
+        {
+            if(ret[i] == ' ' || i == ret.length())//当扫描到空格或者到最后一个字母时
+            {
+                reverse(ret,k,i - 1);//翻转单词
+                k = i + 1;//k指向下一个单词的首字母
+            }
+           
+        }
+        return ret;
+    }
+};
