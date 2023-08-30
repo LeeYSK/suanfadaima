@@ -1,0 +1,80 @@
+link :https://leetcode.cn/leetbook/read/array-and-string/c24he/
+思路：
+2n个整数
+首先将数组有序排序为升序数组
+逻辑上划分为两两组合的数组可分为n个数组
+那么n个数组min（a1 a2）的总和最大就是
+一次遍历排序后的数组，将它们下标为偶数的元素相加
+class Solution {
+public:
+    int partition(vector<int>& nums,int low,int higth)
+    {   
+        int pivot = low;
+        while(low < higth)
+        {
+            //找到比pivot值小的元素，跳出循环
+            while(low < higth && nums[higth] >= pivot) higth--;
+
+            nums[low] = nums[higth];
+            //找到比pivot值大的元素，跳出循环
+            while(low < higth && nums[low] <= pivot) low++;
+            nums[higth] = nums[low];
+        }
+        nums[low] = pivot;
+        return low;
+    }
+
+    void Quicksort(vector<int>& nums,int low,int higth)
+    {
+        while(low < higth)
+        {
+            //首先进行一次划分操作，确定一个元素的最终位置,分为两个子表，分别进行递归
+            int pivot = partition(nums,low,higth);
+            Quicksort(nums,low,pivot - 1);
+            Quicksort(nums,pivot + 1,higth);
+        }
+    }
+    int arrayPairSum(vector<int>& nums) {
+        int low = 0;
+        int higth = nums.size() - 1;
+        Quicksort(nums,low,higth);
+
+        
+
+
+
+        //解1：简单选择排序时间复杂度高
+        //共执行n-1趟遍历，因为在n-1趟时，只需在剩下的两个元素中选择即可，j控制最后一个元素
+        // for(int i = 0;i < nums.size() - 1 ;i++)
+
+        // {
+        //     // 最小的指针min
+        //     int min = i;
+        //     //每趟j需要遍历n-1-i个元素
+        //     for(int j = i +1;j < nums.size();j++)
+        //     {
+        //         //若j所指的元素比min指针的小
+        //         if(nums[j] < nums[min])
+        //         {
+        //             min = j;//令min指向最小的元素
+        //         }
+                
+                
+        //     }
+        //     //i指向的元素已经是最小指，此时min和i指针重合
+        //     if(i != min )//i != min的含义是i指向的不是最小值
+        //         {
+        //             swap(nums[i],nums[min]);
+        //         }
+        // }
+        //sort(nums.begin(),nums.end());
+
+        int ans = 0;
+        for(int i = 0; i < nums.size() - 1;i+=2)
+        {
+            ans += nums[i];
+        }
+
+        return ans;
+    }
+};
