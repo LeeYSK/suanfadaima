@@ -1,0 +1,29 @@
+题目链接：https://leetcode.cn/leetbook/read/array-and-string/cnkjg/
+
+算法思想:利用双指针，因为原数组已经是有序数组，
+所以让两个指针分别指向首元素和尾元素，和大于value，说明区间范围应向左减小，和小于value，范围区间应向右增加，
+注意：题目的index下标是从1开始
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& numbers, int target) {
+       int l = 0;
+       int r = numbers.size() - 1;
+       while(l < r)
+       {
+           if(numbers[l] +numbers[r] > target)
+           {
+               r--;
+           }else if(numbers[l] + numbers[r] < target)
+           {
+               l++;
+           }
+           else{
+                    
+                    return {l + 1,r + 1};
+           }
+       }
+        return numbers;
+
+    }
+};
