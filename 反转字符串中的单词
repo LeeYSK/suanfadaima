@@ -1,0 +1,96 @@
+题目链接：https://leetcode.cn/leetbook/read/array-and-string/c8su7/
+
+给定一个字符串 s ，你需要反转字符串中每个单词的字符顺序，同时仍保留空格和单词的初始顺序。
+示例 1：
+输入：s = "Let's take LeetCode contest"
+输出："s'teL ekat edoCteeL tsetnoc"
+
+示例 2:
+输入： s = "God Ding"
+输出："doG gniD"
+
+算法思想：利用双指针，快指针遍历整个数组，遇到空格时停下，说明空格前是一个完整的单词，反转该单词，反转后，慢指针移动到下一个单词的起始位置，
+需要注意，因为最后一个单词后面没有空格，可以使用i == s.size() - 1 或 i + 1 == s.size()来判断当前单词是否是最后一个单词
+
+
+解法一：
+string reverse(string &s,int start,int end)
+    {
+        int i = start;
+        int j = end;
+        while(i < j)
+        {
+            swap(s[i],s[j]);
+            i++;
+            j--;
+        }
+        return s;
+    }
+    
+    string reverseWords(string s) {
+       
+        int entry = false;//用来判断遍历一个单词的开始与结束，开始时为true，结束设为false
+        int start= 0;
+        int end = 0;
+        for(int i = 0;i < s.size();i++)
+        {
+            //确定每个单词的起始位置，不执行的时候代表一个单词仍在遍历，未遇到空格
+            if(!entry)
+            {
+                entry = true;//进入到i所指单词的区间
+                start = i;//确定每个单词的起始位置
+
+            }
+
+            //当遍历到i所指的字符是空格，说明i - 1 的位置是单词的最后一个字母
+            if(entry && s[i] == ' ' && s[i - 1] != ' ')
+            {
+                entry = false;//结束这个单词的区间
+                end = i - 1;//确定单词的最后一个字母
+                reverse(s,start,end);//反转这个单词
+
+            }
+            //当遍历到最后一个单词时,最后一个单词后没有空格，只能使用i的值来判断是否遍历到最后一个单词
+            if(entry && (i == s.size() - 1 && s[i] != ' '))
+            {
+                end = i;//确定最后一个单词的结尾
+                entry = false;//结束这个单词的区间
+                reverse(s,start,end);
+            }
+
+        }
+
+        return s;
+}
+
+
+
+解法二：
+   string reverseWords(string s) {
+        int slow = 0;
+        int fast = 0;
+        int indice = 0;
+        char temp;
+
+        while(fast < s.size())
+        {
+            if(s[fast + 1] == ' ' || fast + 1 == s.size())
+            {
+                indice = fast;
+                while(slow < indice)
+                {
+                    temp = s[indice];
+                    s[indice] = s[slow];
+                    s[slow] = temp;
+                    slow++;
+                    indice--;
+                }
+                slow = fast + 2;
+                
+            }
+            
+            fast++;
+            
+        }
+        return s;
+    }
