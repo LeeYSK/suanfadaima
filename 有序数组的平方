@@ -1,0 +1,46 @@
+题目链接：https://leetcode.cn/problems/squares-of-a-sorted-array/discussion/
+
+题目描述：给你一个按 非递减顺序 排序的整数数组 nums，返回 每个数字的平方 组成的新数组，要求也按 非递减顺序 排序
+
+示例 1：
+输入：nums = [-4,-1,0,3,10]
+输出：[0,1,9,16,100]
+解释：平方后，数组变为 [16,1,0,9,100]
+排序后，数组变为 [0,1,9,16,100]
+
+示例 2：
+输入：nums = [-7,-3,2,3,11]
+输出：[4,9,9,49,121]
+
+代码： vector<int> sortedSquares(vector<int>& nums) {
+        
+        //算法思想：由于是非递减顺序数组，负数的平方可能会比正数大，而最大值一定在数组的左右两端其中之一
+        //利用双指针，left指向数组的开头，right指向数组的末尾，定义一个新数组，长度和nums的大小一样，
+        //k指针指向新数组的尾端,最后遍历完返回新数组就是非递减序列的平方数组
+        
+        
+        int left = 0;
+        int right = nums.size() - 1;
+        int k = right;
+        vector<int> ans(nums.size(),0);
+        while(left <= right)
+        {
+            if(nums[left] * nums[left] < nums[right] * nums[right])
+            {
+                ans[k] = nums[right] * nums[right];
+                k--;
+                right--;
+            }
+            else
+            {
+                ans[k] = nums[left] * nums[left];
+                k--;
+                left++;
+            }
+        }
+
+
+
+        return ans;
+
+    }
