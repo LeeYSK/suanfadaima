@@ -1,0 +1,66 @@
+题目链接：https://leetcode.cn/problems/remove-linked-list-elements/submissions/
+
+题目描述：给你一个链表的头节点 head 和一个整数 val ，请你删除链表中所有满足 Node.val == val 的节点，并返回 新的头节点 。
+示例 1：
+输入：head = [1,2,6,3,4,5,6], val = 6
+输出：[1,2,3,4,5]
+
+示例 2：
+输入：head = [], val = 1
+输出：[]
+
+示例 3：
+输入：head = [7,7,7,7], val = 7
+输出：[]
+
+代码：ListNode* removeElements(ListNode* head, int val) {
+
+        //解法一：单独处理头结点
+       
+       //head != NULL 意思是有可能是空链表,空链表不执行，若没有这一句，编译不通过
+            while(head != NULL && head->val == val)
+            {
+                ListNode* dead = head;
+                head = head->next;
+                delete dead;
+            }
+        
+            ListNode *cur = head;//临时指针用来遍历链表，此时cur->val不等于val，操作的是cur指针指向的下一个节点
+            //cur != NULL意思是有可能是空链表,空链表不执行
+            while(cur != NULL && cur->next != NULL)
+            {
+                if(cur->next->val == val)
+                {
+                    ListNode *dead = cur->next;
+                    cur->next = cur->next->next;
+                    delete dead;
+                }
+                else
+                {
+                    cur = cur->next;
+                }
+            }
+
+
+        //解法二：设置虚拟头结点，cur指针作用是操作的是下一个节点
+    //     ListNode* dummyhead = new ListNode();//设置虚拟头结点
+    //     dummyhead->next = head;//虚拟头结点的指针域指向头结点，目的是为了把head头结点当成普通节点处理
+    //     ListNode* cur;
+    //     cur = dummyhead;
+    //     while(cur->next != NULL)
+    //     {
+    //         if(cur->next->val == val)
+    //         {
+    //             ListNode* dead = cur->next;
+    //             cur->next = cur->next->next;
+    //             delete dead;
+    //         }
+    //         else{
+    //             cur = cur->next;
+    //         }
+    //     }
+
+    // head = dummyhead->next;
+    // delete dummyhead;
+    return head;
+    }
