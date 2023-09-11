@@ -1,0 +1,30 @@
+题目链接：https://leetcode.cn/problems/reverse-linked-list/
+
+题目描述：给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
+输入：head = [1,2,3,4,5]
+输出：[5,4,3,2,1]
+
+代码：
+    解法一：双指针：
+        public:
+    ListNode* reverseList(ListNode* head) {
+        //算法思想：
+                // 利用翻转next指针，改变next指针方向，相当于链表翻转
+                // 定义cur指针指向头结点，pre指针初始为NULL
+                // 反转链表时还需要有temp临时节点保存cur->next节点，为了在cur所指节点的next方向改变后，仍能找到cur->next
+                // 开始反转要让cur->next = pre，pre = cur，cur = temp这样就完成了第一个节点的翻转，如此循环即可
+                // 注意最后要返回pre指针，因为此时cur指针指向NULL
+        ListNode *cur = head;
+        ListNode* pre = nullptr;
+        while(cur != nullptr)
+        {
+        
+            ListNode *temp = cur->next;
+            cur->next = pre;
+            pre = cur;
+            cur = temp;
+        }
+
+        return pre;
+
+    }
