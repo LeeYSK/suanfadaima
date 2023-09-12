@@ -1,0 +1,38 @@
+题目链接：https://leetcode.cn/problems/swap-nodes-in-pairs/
+
+题目描述：给你一个链表，两两交换其中相邻的节点，并返回交换后链表的头节点。你必须在不修改节点内部的值的情况下完成本题（即，只能进行节点交换）。
+输入：head = [1,2,3,4]
+输出：[2,1,4,3]
+
+示例 2：
+输入：head = []
+输出：[]
+
+示例 3：
+输入：head = [1]
+输出：[1]
+
+代码：
+ ListNode* swapPairs(ListNode* head) {
+            
+
+            
+            ListNode* dummyHead = new ListNode(0);//设置虚拟头结点，指向head，方便操作
+            dummyHead->next = head;
+            ListNode* cur = dummyHead;
+
+            //cur->next != nullptr && cur->next->next != nullptr
+            //偶数节点的情况下，cur->next已经是null，如果顺序颠倒，那么会取空指针异常
+            while(cur->next != nullptr && cur->next->next != nullptr)
+            {
+                ListNode* temp = cur->next;
+                ListNode* temp1 = cur->next->next->next;
+                cur->next = cur->next->next;
+                cur->next->next = temp;
+                temp->next = temp1;
+                cur = temp;
+
+            }
+            return dummyHead->next;
+    }
+ 
