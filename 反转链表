@@ -5,9 +5,28 @@
 输出：[5,4,3,2,1]
 
 代码：
-    解法一：双指针：
+   
         public:
+                //递归法
+                 ListNode* reverse(ListNode *pre,ListNode* cur)
+                 {
+                    if(cur == nullptr) return pre;
+                    ListNode* temp = cur->next;
+                    cur->next = pre;
+            
+                    //reverse(cur,temp)这一步其实双指针法中的pre = cur， cur = temp
+                     return reverse(cur,temp);
+                     //return pre; 不能返回pre，因为递归栈返回到底层是pre的值为NULL
+        
+                }
     ListNode* reverseList(ListNode* head) {
+        //解法二：递归
+            ListNode* cur = head;
+        
+            return reverse(nullptr,cur);
+        
+
+     解法一：双指针：
         //算法思想：
                 // 利用翻转next指针，改变next指针方向，相当于链表翻转
                 // 定义cur指针指向头结点，pre指针初始为NULL
