@@ -1,0 +1,66 @@
+题目链接：https://leetcode.cn/problems/remove-nth-node-from-end-of-list/
+
+题目描述：给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点
+示例 2：
+输入：head = [1], n = 1
+输出：[]
+
+示例 3：
+输入：head = [1,2], n = 1
+输出：[1]
+
+两种解法：
+ListNode* removeNthFromEnd(ListNode* head, int n) {
+        //双指针法：让fast指针先走n步，然后slow指针与fast指针同时移动，当fast->nextnull时，删除slow所指元素
+        ListNode* dummyHead = new ListNode(0);
+        ListNode* fast = dummyHead;
+        ListNode* slow = dummyHead;
+        dummyHead->next = head;
+
+        while(n)
+        {
+            fast = fast->next;
+            n--;
+        }
+        while(fast->next != nullptr)
+        {
+            slow = slow->next;
+            fast = fast->next;
+        }
+        ListNode* dead = slow->next;
+        slow->next = slow->next->next;
+        delete dead;
+        return dummyHead->next;
+
+
+
+
+
+        //算法思想：采用虚拟头结点的方式，要删除倒数第几个节点，就需要定位到被删节点的前一个节点利用指针
+        //cur->next = cur->next->next;完成删除节点
+        //首先统计节点个数，然后利用res = count - n计算出cur走到被删节点的前一个节点需要几步
+        
+        // ListNode* dummyHead = new ListNode(0);
+        // dummyHead->next = head;
+        // int count = 0;
+        // ListNode *cur = dummyHead;
+        // while(cur->next != nullptr)
+        // {
+        //     cur = cur->next;
+        //     count++;
+        // }
+        // int res = count - n;
+        // cur = dummyHead;
+        // while(res)
+        // {
+        //     cur = cur->next;
+        //     res--;
+        // }
+        // ListNode* dead = cur->next;
+        // cur->next = cur->next->next;
+        // delete dead;
+
+        // return dummyHead->next;
+        
+
+    }
