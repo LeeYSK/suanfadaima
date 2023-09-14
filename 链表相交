@@ -1,0 +1,57 @@
+题目链接：https://leetcode.cn/problems/intersection-of-two-linked-lists-lcci/
+
+题目描述：给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。如果两个链表没有交点，返回 null 。
+
+代码：
+ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+
+        //节点相等不是数值相等，而是判断指针指向的地址（指向的是否是同一对象）是否相同，用p1 == p2即可
+        //注意，即使节点的数值相同，但指针所指地址有可能也不相同
+        ListNode* fa = headA;
+        ListNode* fb = headB;
+        int counta = 0;//计算链表a节点的个数
+        int countb = 0;//计算链表b节点的个数
+        while(fa != NULL)
+        {
+            fa = fa->next;
+            counta++;
+        }
+        while(fb != NULL)
+        {
+            fb = fb->next;
+            countb++;
+        }
+        fa = headA;
+        fb = headB;
+        //判断a和b谁是长链表，然后让长链表的指针移动到和短链表末尾对齐的位置
+        if(counta > countb ) 
+        {
+            int res = counta - countb;
+            while(res)
+            {
+                fa = fa->next;
+                res--;
+            }
+        }else if(counta < countb)
+        {
+            int res = countb - counta;
+            while(res)
+            {
+                fb = fb->next;
+                res--;
+            }
+        }
+
+        //此时末尾已对齐
+        while(fa != NULL && fb != NULL)
+        {
+            //判断指针是否相等
+            if(fa == fb)
+            {
+                return fa;
+            }
+            fa = fa->next;
+            fb = fb->next;
+        }
+        return NULL;
+    }
