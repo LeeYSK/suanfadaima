@@ -1,0 +1,43 @@
+题目链接：https://leetcode.cn/problems/linked-list-cycle-ii/
+
+题目描述：给定一个链表的头节点  head ，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
+
+如果链表中有某个节点，可以通过连续跟踪 next 指针再次到达，则链表中存在环。 为了表示给定链表中的环，评测系统内部使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。如果 pos 是 -1，则在该链表中没有环。注意：pos 不作为参数进行传递，仅仅是为了标识链表的实际情况。
+
+不允许修改 链表。
+输入：head = [3,2,0,-4], pos = 1
+输出：返回索引为 1 的链表节点
+解释：链表中有一个环，其尾部连接到第二个节点。
+输入：head = [1,2], pos = 0
+输出：返回索引为 0 的链表节点
+解释：链表中有一个环，其尾部连接到第一个节点。
+代码：
+ ListNode *detectCycle(ListNode *head) {
+        //考查知识点：
+        //1，判断链表是否有环
+        //2，若有环，怎么找到这个环的入口（数学问题）
+
+        //判断是否有环，利用快慢指针，慢指针走一步，快指针走两步，若有环，那么快慢指针一定在环内相遇
+        ListNode* fast = head;
+        ListNode* slow = head;
+        //判断链表是否是循环链表，fast->next是以防一个节点去到空指针
+        while(fast != NULL && fast->next != NULL)
+        {
+            fast = fast->next->next;
+            slow = slow->next;
+            if(slow == fast)//指针相遇，说明快指针追上了慢指针，链表内有环
+            {
+                
+                ListNode* index1 = fast;
+                ListNode* index2 = head;
+                while(index1 != index2)
+                {
+                    //两个指针，分别从相遇节点和头结点走，两指针相遇节点即为环入口节点
+                    index1 = index1->next;
+                    index2= index2->next;
+                }
+                return index1;
+            }
+        }
+        return NULL;
+}
