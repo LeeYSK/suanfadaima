@@ -1,0 +1,52 @@
+题目链接：https://leetcode.cn/problems/intersection-of-two-arrays/
+
+题目描述：给定两个数组 nums1 和 nums2 ，返回 它们的交集 。输出结果中的每个元素一定是 唯一 的。我们可以 不考虑输出结果的顺序 。
+
+示例 1：
+输入：nums1 = [1,2,2,1], nums2 = [2,2]
+输出：[2]
+
+示例 2：
+输入：nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+输出：[9,4]
+解释：[4,9] 也是可通过的
+
+两种实现方式：public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+
+        //解法一
+        //利用C++中hash表的数据结构unordered_set集合
+        unordered_set<int> result_set;//存放结果集，因为输出结果唯一，所以对结果集去重  
+        unordered_set<int> nums_set(nums1.begin(),nums1.end());//将num1数组放入集合，去重，方便比较
+
+        for(auto num : nums2)
+        {
+            //判断在nums1中是否能找到num
+            //find用法,若能在set中找到num元素，返回nums_set中指向num的迭代器，若找不到，返回一个迭代器，指向nums_set集合中的end()
+            //if(nums_set.find(num) != nums_set.end())
+            if(nums_set.count(num) != 0)
+            {
+                result_set.insert(num);
+            }
+        }
+
+        return vector<int>(result_set.begin(),result_set.end());
+
+        //解法二：
+        // unordered_set<int> result_set;//存放结果集
+        // int hash[1000] = {0};
+        // //遍历num1,
+        // for(auto num : nums1)
+        // {
+        //     hash[num] = 1;//把num1中的num每个元素映射到数组中下标对应的位置，并将标志置为一
+        // }
+        // for(auto num : nums2)
+        // {
+        //     //判断nums2中的num在nums1中是否出现过
+        //     if(hash[num] == 1)//hash[num] == 1说明num2出现的元素在nums1中也出现过
+        //     result_set.insert(num);
+        // }
+        // return vector<int>(result_set.begin(),result_set.end());
+
+
+    }
