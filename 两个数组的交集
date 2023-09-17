@@ -15,6 +15,7 @@
     vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
 
         //解法一
+        //哈希表应用场景，给定一个元素，判断这个元素在集合中是否出现
         //利用C++中hash表的数据结构unordered_set集合
         unordered_set<int> result_set;//存放结果集，因为输出结果唯一，所以对结果集去重  
         unordered_set<int> nums_set(nums1.begin(),nums1.end());//将num1数组放入集合，去重，方便比较
