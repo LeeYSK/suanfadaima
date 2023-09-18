@@ -15,6 +15,11 @@
 解释：反转后的字符串中不能存在前导空格和尾随空格。
 class Solution {
 public:
+
+    //思想：先翻转整个字符数组，首尾去掉空格，然后定义一个新的字符数组，将翻转后的字符数组复制到新数组中，中间有多个空格利用while循环只复制一个空格
+  //然后遍历新字符数组，将新数组中的倒序单词在颠倒回来
+
+
     void reverse(string &s,int start,int end)
     {
         int left = start;
