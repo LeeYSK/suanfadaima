@@ -27,6 +27,30 @@
 
 
     bool isHappy(int n) {
+
+        //快慢指针，快指针每次走两个数，慢指针每次计算一个数
+        //把整个计算的过程看成隐式链表，如果是快乐数，没有循环，那么快指针一定先到达1
+        //若不是快乐数，存在循环，快指针在循环中一定可以追上慢指针，即在某个数，慢指针与快指针一定相遇
+        int slow = n;
+        int fast = getSum(n);
+
+        while(fast != 1)//while循环控制fast没有到达1或者没有追上slow
+        {
+            if(fast == slow)
+            {
+                return false;
+            }
+            else
+            {
+                slow = getSum(slow);
+                fast = getSum(getSum(fast));
+            }
+        }
+        return true;
+
+
+
+
         //算法思想：
         //分为两步，第一步求n的下一个数字是什么
         //第二步，用set集合判断是否进入死循环
