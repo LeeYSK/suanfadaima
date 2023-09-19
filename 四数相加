@@ -1,0 +1,51 @@
+题目链接：https://leetcode.cn/problems/4sum-ii/description/ 
+
+对比记忆有效字母异位词
+
+题目描述：给你四个整数数组 nums1、nums2、nums3 和 nums4 ，数组长度都是 n ，请你计算有多少个元组 (i, j, k, l) 能满足：
+0 <= i, j, k, l < n
+nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
+ 
+示例 1：
+输入：nums1 = [1,2], nums2 = [-2,-1], nums3 = [-1,2], nums4 = [0,2]
+输出：2
+解释：
+两个元组如下：
+1. (0, 0, 0, 1) -> nums1[0] + nums2[0] + nums3[0] + nums4[1] = 1 + (-2) + (-1) + 2 = 0
+2. (1, 1, 0, 0) -> nums1[1] + nums2[1] + nums3[0] + nums4[0] = 2 + (-1) + (-1) + 0 = 0
+
+示例 2：
+输入：nums1 = [0], nums2 = [0], nums3 = [0], nums4 = [0]
+输出：1
+ 代码：public:
+    int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {
+       //哈希表解决问题，本题中，key记录两个数组中元素相加的值，value记录这个值出现的次数
+       //类比有效字母异位词
+        unordered_map<int,int> map;
+        for(auto iter : nums1)
+        {
+            for(auto iter1 : nums2)
+            {
+                auto iter3 = iter1 + iter;
+
+                map[iter3]++;
+            }
+        }
+
+        int count = 0;//记录满足条件的元组
+
+        for(auto iter1 : nums3)
+        {
+            for(auto iter2 : nums4)
+            {
+                //a+b+c+d = 0；所以a+b = -c-d
+                auto iter3 = iter1 + iter2;
+                if(map.find(-iter3) != map.end())
+                {
+                    count = count + map[iter3];
+                }
+            }
+        }
+        return count;
+
+    }
