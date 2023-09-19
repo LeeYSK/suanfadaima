@@ -1,0 +1,78 @@
+题目链接：https://leetcode.cn/problems/ransom-note/
+
+题目描述：给你两个字符串：ransomNote 和 magazine ，判断 ransomNote 能不能由 magazine 里面的字符构成。
+如果可以，返回 true ；否则返回 false 。
+magazine 中的每个字符只能在 ransomNote 中使用一次。
+
+示例 1：
+输入：ransomNote = "a", magazine = "b"
+输出：false
+
+示例 2：
+输入：ransomNote = "aa", magazine = "ab"
+输出：false
+
+示例 3：
+输入：ransomNote = "aa", magazine = "aab"
+输出：true
+
+ 代码：public:
+    bool canConstruct(string ransomNote, string magazine) {
+        //哈希表利用数组,因为均为小写字母，定义一个数组来映射字母下标，数组中记录赎金信中每个字母出现的次数
+        //然后扫描magazine，若magazine中的字符在数组下标中也出现，那么数组值--，最后判断数组是否全为0
+        //magazine 的字符可以比ransomNote多
+        unordered_map<char,int>map;
+        for(auto i : ransomNote)//把赎金信中的字母放到map集合中
+        {
+            map[i]++;
+        }
+
+        for(int i = 0;i < magazine.size();i++)
+        {
+            if(map.find(magazine[i]) != map.end())//赎金信与杂志中存在相同的字母
+            {
+                auto iter = map.find(magazine[i]);
+                //当访问地址（指针或迭代器）的成员或数据时，用“->”
+                ite->second--;
+            }
+        }
+        for(auto iter : map)
+        {
+            //iter.second说明赎金信中的字母出现次数没有减完
+            if(iter.second > 0) return false;
+        }
+
+
+
+
+
+
+        // int hash[26] = {0};
+
+        // for(auto i : ransomNote)
+        // {
+        //     //将二十六个英文字母映射到数组下标中
+        //     hash[i - 'a']++;
+        // }
+
+        // for(auto i : magazine)
+        // {
+        //     //在遍历magazine时，只关注ransomNote中出现的英文字母，
+        //  //至于magazine中多的不去关注，hash数组中的数字就是ransomNote中字母出现的次数
+        // //当数组中的任意字母减到0时，说明此字母的个数=magazine中的个数，所以不需要再减
+        //    if(hash[i - 'a'] != 0)
+        //    {
+        //        hash[i - 'a']--;
+               
+        //    }
+        // }
+
+        // for(auto i : hash)
+        // {
+        //     if(i != 0)
+        //     {
+        //         return false;
+        //     }
+        // }
+         return true;
+    }
